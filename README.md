@@ -1,7 +1,7 @@
 # BaseApi
-Modern web uygulamaları için tasarlanmış, .NET 8 ile oluşturulmuş esnek ve ölçeklenebilir bir temel API projesidir. authentication, authorization, logging, caching, file storage, message queue, real-time notifications gibi çeşitli temel özellikleri içerir.
+It is a flexible and scalable base API project built with .NET 8 for modern web applications. The project includes key features like authentication, authorization, logging, caching, file storage, message queue, and real-time notifications.
 
-# Teknolojiler
+# Technologies
 
 * .NET 8.0
 * Microsoft SQL Server
@@ -16,26 +16,26 @@ Modern web uygulamaları için tasarlanmış, .NET 8 ile oluşturulmuş esnek ve
 * Docker
 
 # Clean Architecture
-Clean architecture, uygulamamızın bağımlıklarının tek yönlü ve içe doğru olmasını savunan bir yazılım mimarisidir.
+Clean architecture is a software design that suggests dependencies in the application should be one-way and point inward.
 
 ### Domain
-Tüm varlıkları (entities), değer nesnelerini (value objects), enumları, arayüzleri ve domaine özgü iş mantığını içerir. Sistemdeki hiçbir diğer katmana bağımlı değildir.
+This layer contains all entities, value objects, enums, interfaces, and domain-specific business logic. It does not depend on any other layer in the system.
 
 ### Contracts
-Katmanlar arasındaki bağımlılığı azaltmak için kullanılır. Application katmanı arasında iletişim kurmak için kullanılan DTO'lar, request-response modelleri gibi veri yapıları içerir.
+Used to reduce dependency between layers. It includes data structures like DTOs, request-response models, which are used for communication between the Application layer.
 
 ### Application
-Uygulama mantığını ve gerekli kullanım senaryolarını düzenlemekten sorumludur. Domain ve Contracts dışında başka katmanlara bağlı değildir.
+This layer is responsible for organizing the application logic and use cases. It only depends on the Domain and Contracts layers.
 
-Bu katman, uygulama mantığını desteklemek için gereken ve dış katmanlar tarafından kullanılan ek arayüzleri tanımlar. Örneğin **_IDbContext_** arayüzü bu katmanda tanımlanır ancak Persistence katmanı tarafından uygulanır.
+It also defines extra interfaces needed to support application logic, which are implemented by the outer layers. For example, the **_IDbContext_** interface is defined in this layer but implemented by the Persistence layer.
 
-Bu katman, uygulama mantığını komutlar (commands) ve sorgular (queries) olarak yapılandırmak için **CQRS desenini** kullanır ve bu amaçla MediatR kütüphanesini kullanır.
+This layer uses the **CQRS pattern** to structure the logic into commands and queries, using the MediatR library.
 
 ### Persistence
-Veritabanı işlemlerini ve veri yönetimini gerçekleştiren katmandır. Bu katman, varlıklar (entities) için EF Core konfigürasyonlarını içerir, uygulamanın veritabanı bağlamını (context) uygular ve bazı kalıcıkla ilgili bağımlılıkları yapılandırır.
+This layer handles database operations and data management. It contains EF Core configurations for entities, implements the application's database context, and sets up persistence-related dependencies.
 
 ### Infrastructure
-Dış kaynaklara erişmekle görevli sınıfları içerir. Bu sınıflar, application katmanında tanımlanan arayüzlere dayanır. Mevcut sistemde:
+This layer includes classes responsible for accessing external resources. These classes are based on interfaces defined in the Application layer. In the current system, it handles services like:
 * Caching (Redis)
 * Message Queue (RabbitMQ)
 * Storage (AWS S3)
@@ -43,14 +43,8 @@ Dış kaynaklara erişmekle görevli sınıfları içerir. Bu sınıflar, applic
 * Email
 * Cryptography
 
-servislerini barındırır.
-
 ### Api
-Tüm sistemi bir araya getirmekten sorumludur. Bu katmanın tek işlevi, HTTP isteklerini kabul etmek, bu istekleri komut veya sorgu olarak paketlemek, sistemin başka bir yerine göndererek işlenmesini sağlamak ve ardından sonucu yanıt olarak geri döndürmektir. Controller'lar olabildğince basit ve ince bir yapıda olacak şekilde tasarlanmıştır.
+This layer brings the whole system together. Its only job is to accept HTTP requests, package them as commands or queries, send them to the appropriate part of the system for processing, and return the result as a response. Controllers are designed to be as simple and thin as possible.
 
 # Swagger UI
 ![Ekran görüntüsü 2024-09-23 161804](https://github.com/user-attachments/assets/00632dd2-fbd9-4f24-ae74-b899c1933137)
-
-# Teşekkürler
-
-Bu projeyi tasarlarken, **Gençay Yıldız** ve **Milan Jovanović**'in değerli eğitimlerinden öğrendiklerim için kendilerine teşekkür ederim.
