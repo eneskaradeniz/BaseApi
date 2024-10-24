@@ -21,6 +21,12 @@ Clean architecture is a software design that suggests dependencies in the applic
 ### Domain
 This layer contains all entities, value objects, enums, interfaces, and domain-specific business logic. It does not depend on any other layer in the system.
 
+In this project, **Domain-Driven Design (DDD)** principles are applied, which focus on encapsulating business rules and logic within the domain itself. The project also follows a **Rich Domain Model** approach, moving away from the **Anemic Domain Model**, to ensure that business logic is directly embedded in entities and value objects.
+
+Additionally, **Strongly Typed IDs** are used to improve type safety and prevent ID-related bugs, ensuring that each entity is identified with specific, strongly typed value objects rather than primitive data types.
+
+The project also implements **Domain Events** to decouple different parts of the domain logic, allowing various parts of the system to react to changes within the domain in a flexible and scalable way.
+
 ### Contracts
 Used to reduce dependency between layers. It includes data structures like DTOs, request-response models, which are used for communication between the Application layer.
 
@@ -47,4 +53,4 @@ This layer includes classes responsible for accessing external resources. These 
 This layer brings the whole system together. Its only job is to accept HTTP requests, package them as commands or queries, send them to the appropriate part of the system for processing, and return the result as a response. Controllers are designed to be as simple and thin as possible.
 
 # Swagger UI
-![Ekran görüntüsü 2024-09-23 161804](https://github.com/user-attachments/assets/00632dd2-fbd9-4f24-ae74-b899c1933137)
+![baseapi_swagger](https://github.com/user-attachments/assets/38aa202a-fdcb-4cfa-86c8-2691a198d7fa)
